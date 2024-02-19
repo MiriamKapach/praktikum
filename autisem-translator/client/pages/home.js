@@ -21,13 +21,9 @@ export default function HomeScreen() {
         onPress={() => navigateToScreen("Login")}
       />
            <GenericButton
-        title="Thrrapist"
+        title="Therapist"
         onPress={() => navigateToScreen("TherapistScreen")}
       />
-      {/* <Button
-        title="Record"
-        onPress={() => navigateToScreen("Record")}
-      /> */}
     </View>
   );
 }

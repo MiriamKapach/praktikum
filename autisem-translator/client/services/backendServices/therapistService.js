@@ -41,6 +41,46 @@ const TherapistService = {
       throw error;
     }
   },
+  
+  getTherapistPatients: async (therapistId) => {
+    try {
+      const response = await axios.get(`${REACT_APP_BASE_URL}/therapists/${therapistId}/patients`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching therapist patients:', error);
+      throw new Error('Error fetching therapist patients');
+    }
+  },
+  associatePatient: async (therapistId, patientUsername) => {
+    try {
+      console.log("associatePatient",therapistId, patientUsername)
+      const response = await axios.post(`${REACT_APP_BASE_URL}/therapists/create`, {
+        therapistId: therapistId,
+        patientUsername: patientUsername
+        });
+      if (response.data.message == 'Patient not found') {
+        return 'no such patient'
+      }
+      return response.data;
+    } catch (error) {
+      console.error('Error sending notification:', error);
+      throw new Error('Error sending notification');
+    }
+  },
+  unAssociatePatient: async (therapistId, patientId) => {
+    try {
+      const response = await axios.delete(`${REACT_APP_BASE_URL}/therapists?therapistID=${therapistId}&patientID=${patientId}`);
+      if (response.data.success != true) {
+        return 'failed'
+      }
+      else {
+        return true
+      }
+    } catch (error) {
+      console.error('Error sending notification:', error);
+      throw new Error('Error sending notification');
+    }
+  },
 };
 
 export default TherapistService;
